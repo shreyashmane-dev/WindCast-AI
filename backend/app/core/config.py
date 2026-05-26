@@ -13,7 +13,7 @@ class Settings(BaseSettings):
   ENVIRONMENT: str = "development"
 
   # Allowed CORS origins
-  ALLOWED_ORIGINS: str = "http://localhost:3000"
+  ALLOWED_ORIGINS: str = "http://localhost:3000,https://windcast-ai.vercel.app,https://windcast-ai-frontend.vercel.app"
 
   @property
   def allowed_origins_list(self) -> List[str]:
