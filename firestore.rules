@@ -1,0 +1,65 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function checking if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function checking if user has Super-Administrator privileges
+    function isSuperAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == 'admin@windcast.ai' ||
+        request.auth.token.role == 'Super-Administrator'
+      );
+    }
+    
+    // Helper function checking if target document belongs to the signed-in user
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // 1. Operator profiles collection
+    match /users/{userId} {
+      // Users can read and update only their own profile details
+      allow read, update: if isOwner(userId);
+      // New user accounts can be created on signup
+      allow create: if isAuthenticated();
+      // Only Super-Admins can delete user records
+      allow delete: if isSuperAdmin();
+    }
+
+    // 2. ML Predictions Audits collection (telemetry & outputs logs)
+    match /predictions/{predictionId} {
+      // Authenticated operators can read prediction histories
+      allow read: if isAuthenticated();
+      // Operators can log new predictions (writing logs)
+      allow create: if isAuthenticated() && 
+        request.resource.data.predicted_power >= 0 &&
+        request.resource.data.efficiency >= 0;
+      // Prediction audits must remain immutable for compliance; no modifications allowed!
+      allow update: if false;
+      // Only Super-Admins can clean up/delete prediction log files
+      allow delete: if isSuperAdmin();
+    }
+
+    // 3. Grid Historical Analytics cache collection (daily aggregates)
+    match /analytics/{docId} {
+      // Operators can read compiled aggregates to render dashboard analytics sparklines
+      allow read: if isAuthenticated();
+      // Block all client-side writes to preserve analytics integrity.
+      // Firebase Admin SDK used by backend bypasses rules, securing server-side updates!
+      allow write: if false;
+    }
+
+    // 4. ML Model metadata collection (metrics and model statuses)
+    match /models/{modelId} {
+      // Models listing metadata can be read by authenticated users
+      allow read: if isAuthenticated();
+      // Writing model records is blocked for clients (backend update only)
+      allow write: if false;
+    }
+  }
+}

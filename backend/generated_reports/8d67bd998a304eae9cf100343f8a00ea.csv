@@ -1,0 +1,3 @@
+temperature,relativehu,dewpoint,windspeed,winddirec,windgust,Predicted_Power,Prediction_Confidence,Efficiency_Percent,Alert_Status,Resolved_Region
+25,70,21,8,180,11,1638.93,0.61,74.5,Normal Grid Synced,"Mumbai, India"
+29,66,23,10,210,14,1779.09,0.61,80.9,Normal Grid Synced,"Mumbai, India"

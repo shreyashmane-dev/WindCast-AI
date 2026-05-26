@@ -1,0 +1,23 @@
+# WindCast AI Backend Orchestration compose file
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: windcast_api_service
+    ports:
+      - "8000:8000"
+    volumes:
+      # Bind local secrets and settings for hot-reloads
+      - ./secret:/workspace/secret
+      - ./trained_models:/workspace/trained_models
+    env_file:
+      - .env
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

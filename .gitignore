@@ -1,0 +1,45 @@
+# WindCast AI Git Ignore Rules
+
+# Python Caches & Environments
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.env
+.venv
+venv/
+ENV/
+env/
+
+# Large Machine Learning Models Binaries
+# (Prevents GitHub push failures due to >100MB file size limits)
+backend/trained_models/*.joblib
+backend/trained_models/*.pkl
+backend/trained_models/random_forest.*
+backend/trained_models/xgboost.*
+trained_models/
+models/
+
+# Node.js / Next.js caches
+node_modules/
+.next/
+out/
+build/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp*
+.pnp.js
+
+# Streamlit caches
+.streamlit/
+
+# OS/System files
+.DS_Store
+Thumbs.db
+
+# Secrets & Credentials
+*firebase-service-account.json
+secret/
+frontend/.env.local
+backend/.env

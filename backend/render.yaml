@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: windcast-ai-backend
+    env: docker
+    plan: free
+    dockerfilePath: backend/Dockerfile
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: CORS_ORIGINS
+        value: https://your-nextjs-app.vercel.app,http://localhost:3000

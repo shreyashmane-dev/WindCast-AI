@@ -1,0 +1,29 @@
+# WindCast AI FastAPI Backend Dependencies
+
+# FastAPI framework core
+fastapi==0.128.2
+uvicorn==0.40.0
+pydantic==2.12.5
+pydantic-settings==2.13.1
+
+# Security & Session Authorization
+python-jose[cryptography]==3.5.0
+passlib[bcrypt]==1.7.4
+bcrypt==5.0.0
+firebase-admin==6.9.0
+
+# Network, WebSockets & File Parsing
+websockets==16.0
+python-multipart==0.0.22
+httpx==0.28.1
+
+# Machine Learning & Scientific Computing
+scikit-learn==1.8.0
+xgboost==3.2.0
+pandas==2.3.3
+numpy==1.26.4
+joblib==1.5.3
+tensorflow==2.17.0
+
+# Automated Testing
+pytest==8.0.0

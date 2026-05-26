@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@theme {
+  --color-electric-blue: #0ea5e9;
+  --color-neon-cyan: #06b6d4;
+  --color-emerald-green: #10b981;
+  --color-cyber-purple: #8b5cf6;
+  --color-dark-deep: #030712;
+  --color-dark-panel: #0b0f19;
+  --color-glass-border: #1e293b;
+  --color-glass-border-hover: #06b6d4;
+
+  --animate-spin-slow: spin 15s linear infinite;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-glow-pulse: glow 3s ease-in-out infinite alternate;
+}
+
+@layer base {
+  body {
+    background-color: #030712;
+    color: #f3f4f6;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Solid Premium Panel Utilities */
+
+.glass-panel {
+  background: #0b0f19; /* Solid deep navy panel */
+  border: 1px solid #1e293b; /* Solid slate border */
+  box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.45);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+  border-color: #06b6d4; /* Solid neon cyan highlight */
+  box-shadow: 0 4px 20px 0 rgba(6, 182, 212, 0.08);
+  transform: translateY(-2px);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.6), 0 0 20px rgba(6, 182, 212, 0.2);
+}
+
+.text-glow-green {
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.6), 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.border-glow-cyan {
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+  border-color: rgba(6, 182, 212, 0.5);
+}
+
+.border-glow-green {
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+.border-glow-rose {
+  box-shadow: 0 0 15px rgba(244, 63, 94, 0.25);
+  border-color: rgba(244, 63, 94, 0.5);
+}
+
+/* Turbine Spin Animation */
+@keyframes turbine-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-turbine {
+  animation: turbine-spin linear infinite;
+  transform-origin: center center;
+}
+
+/* Custom Scrollbar for Sci-Fi Aesthetics */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030712;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #06b6d4;
+  box-shadow: 0 0 8px #06b6d4;
+}
+
+/* Ambient Background Lights */
+.bg-ambient {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Floating grid pattern */
+.bg-cyber-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+/* Energy Grid Dot Flow */
+.energy-dot {
+  stroke-dasharray: 6, 18;
+  animation: dash 4s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+/* Performance Indicator bar */
+.indicator-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.indicator-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: slide-glow 2s infinite linear;
+}
+
+@keyframes slide-glow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(330%); }
+}
+
+/* Scanning Security Laser Animation for Protected Route Loaders */
+@keyframes scanning-laser {
+  0% {
+    top: 0%;
+    opacity: 0.1;
+  }
+  50% {
+    top: 100%;
+    opacity: 0.8;
+  }
+  100% {
+    top: 0%;
+    opacity: 0.1;
+  }
+}
+
+.scanning-laser-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #06b6d4, #10b981, #06b6d4, transparent);
+  box-shadow: 0 0 10px #06b6d4, 0 0 20px #10b981;
+  animation: scanning-laser 4s ease-in-out infinite;
+  z-index: 10;
+  pointer-events: none;
+}

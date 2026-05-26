@@ -1,0 +1,152 @@
+# Implementation Plan - WindCast AI Full-Stack Production Integration
+
+This document outlines the security specifications, data mapping, and connection architecture for linking the **Next.js frontend** and **FastAPI backend** utilizing **Firebase Authentication** and **Reconnecting WebSockets**.
+
+---
+
+## Centralized Integration Architecture
+
+Our full-stack connection will follow a production-grade secure flow:
+
+```mermaid
+sequenceDiagram
+    participant User as Operator Client
+    participant FE as Next.js Frontend
+    participant FB as Firebase Auth Service
+    participant BE as FastAPI Backend
+    
+    User->>FE: Logs in (Email/Password or Google)
+    FE->>FB: Authentication handshake
+    FB-->>FE: Returns Firebase ID Token
+    FE->>FE: Store token in React Auth State
+    
+    User->>FE: Triggers Power Prediction Slider
+    FE->>BE: GET /api/v1/predict with Bearer <ID_Token>
+    BE->>BE: Intercept CORS Preflight (OPTIONS)
+    BE->>FB: Verify token against Firebase Admin SDK
+    FB-->>BE: Token Verified (Claims OK)
+    BE->>BE: Execute ML Inference Pipeline
+    BE-->>FE: JSON Response (Power, Efficiency, Alert)
+    FE-->>User: Renders Neon Speedometer Dial
+```
+
+### Central Component Structure
+
+We will place our integration modules in these directories:
+
+```
+frontend/src/
+├── services/
+│   ├── api.ts          # Central Axios/Fetch client (JWT interceptors & loading logs)
+│   ├── auth.ts         # Firebase Auth listeners and token retrieval hooks
+│   ├── prediction.ts   # Authenticated forecast callers (single & batch CSV file uploads)
+│   ├── analytics.ts    # Dashboard analytics and feature weights fetchers
+│   └── websocket.ts    # ReconnectingWebSocket class with heartbeats & retry loops
+└── .env.local          # Local and production backend host configurations
+
+backend/app/
+├── core/
+│   ├── config.py       # Pydantic settings loading ALLOWED_ORIGINS & Firebase credentials
+│   └── security.py     # Firebase Admin SDK verification hooks and fallback decoders
+├── api/
+│   ├── deps.py         # FastAPI dependency injection (extracting Bearer user token)
+│   └── endpoints/
+│       ├── predict.py  # Securing predictions behind get_current_user dependencies
+│       └── websocket.py# WebSocket live feeds supporting active model selectors
+└── .env                # Env variables (CORS arrays, Firebase JSON path, environment states)
+```
+
+---
+
+## User Review Required
+
+We want to highlight three major structural connection systems for your review:
+
+> [!IMPORTANT]
+> **1. Production-Safe CORS Middleware on FastAPI**
+> We will configure the FastAPI CORS middleware in `main.py` using dynamic environment-based origins instead of insecure wildcards (`"*"`):
+> - Reading a comma-separated list of origins (e.g. `http://localhost:3000,https://your-frontend.vercel.app`) from `.env`.
+> - Allowing `credentials=True` (crucial for cookies and auth headers), `allow_methods=["*"]`, and `allow_headers=["*"]`.
+> - Properly resolving preflight `OPTIONS` requests.
+
+> [!TIP]
+> **2. Robust Reconnecting WebSockets with Heartbeats**
+> To prevent WebSockets from silently dropping due to proxy timeouts (e.g. Render/Railway idling connections after 30-60s of inactivity), our `websocket.ts` service will:
+> - Send a periodic heartbeat (ping/pong) every 20 seconds.
+> - Automatically attempt reconnection with exponential backoff if disconnected.
+> - Dispatch events to trigger graceful UI fallback states and browser toasts if the backend goes offline.
+
+> [!WARNING]
+> **3. Firebase Admin Token Verification & Mock Fallback**
+> In `backend/app/core/security.py`, we will implement the Firebase Admin SDK token decoder (`firebase_admin.auth.verify_id_token`).
+> To ensure the backend is **fully operational and testable immediately out of the box** even before you copy your Firebase Service Account JSON credentials, we will build an intelligent local testing fallback: if the credentials JSON is missing or `ENVIRONMENT="development"`, the verification engine will decode the token or fallback to a secure developer claim (`dev-operator-admin`), printing a warning in the console!
+
+---
+
+## Open Questions
+
+> [!IMPORTANT]
+> **Should the API client automatically refresh the Firebase ID Token when it detects an expired session (401 Unauthorized), or should it redirect the user to the Login page immediately?**
+> *Our recommendation:* The API client in `src/services/api.ts` will first attempt to retrieve a fresh token from the active Firebase User session (`user.getIdToken(true)`). If Firebase Auth signals that the session has completely expired, the client will catch the 401 error, wipe local sessions, and redirect to `/login` with an "Auth Decryption Expired" toast notification.
+
+---
+
+## Proposed Changes
+
+We will create and refine these files across the frontend and backend:
+
+### [Component Name] Full-Stack Secure Connection System
+
+#### [NEW] [frontend/.env.local](file:///c:/Users/OMPRASAD/.gemini/antigravity-ide/scratch/WindCast%20AI/frontend/.env.local)
+Templates for next-config API endpoints and Firebase Web config parameters.
+
+#### [NEW] [backend/.env](file:///c:/Users/OMPRASAD/.gemini/antigravity-ide/scratch/WindCast%20AI/backend/.env)
+Templates for Allowed CORS Origins, model folder locations, and Firebase Credentials paths.
+
+#### [NEW] [api.ts (Client)](file:///c:/Users/OMPRASAD/.gemini/antigravity-ide/scratch/WindCast%20AI/frontend/src/services/api.ts)
+Bespoke Fetch/Axios client wrapper supporting:
+- Loading interceptors.
+- Automatic header injections (`Authorization: Bearer <ID_Token>`).
+- Centralized timeout handling and automatic retries on network failures.
+
+#### [NEW] [auth.ts (Hooks)](file:///c:/Users/OMPRASAD/.gemini/antigravity-ide/scratch/WindCast%20AI/frontend/src/services/auth.ts)
+A custom React Hook (`useAuth`) that wraps the Firebase Auth state machine, manages login parameters, fetches ID tokens, and synchronizes user profiles.
+
+#### [NEW] [websocket.ts (Client)](file:///c:/Users/OMPRASAD/.gemini/antigravity-ide/scratch/WindCast%20AI/frontend/src/services/websocket.ts)
+A robust browser-native `ReconnectingWebSocket` class managing connection state machines, heartbeats, and exponential backoff retry algorithms.
+
+#### [NEW] [prediction.ts (Services)](file:///c:/Users/OMPRASAD/.gemini/antigravity-ide/scratch/WindCast%20AI/frontend/src/services/prediction.ts)
+Centralized prediction client calls:
+- `getPrediction(weather)`: Passes metrics, attaches active model headers, returns predicted power and turbine alerts.
+- `uploadBatchCSV(file)`: Sends a `multipart/form-data` request with the CSV file and returns batch predictions statistics.
+
+#### [NEW] [analytics.ts (Services)](file:///c:/Users/OMPRASAD/.gemini/antigravity-ide/scratch/WindCast%20AI/frontend/src/services/analytics.ts)
+Client service calling aggregate analytics, historical power summaries, and variables correlation tables.
+
+#### [MODIFY] [config.py (FastAPI)](file:///c:/Users/OMPRASAD/.gemini/antigravity-ide/scratch/WindCast%20AI/backend/app/core/config.py)
+Update to parse CSV Allowed Origins and map Firebase config variables.
+
+#### [MODIFY] [security.py (FastAPI)](file:///c:/Users/OMPRASAD/.gemini/antigravity-ide/scratch/WindCast%20AI/backend/app/core/security.py)
+Implement `verify_firebase_token` utilizing `firebase_admin` and developer bypass fallbacks.
+
+#### [MODIFY] [deps.py (FastAPI)](file:///c:/Users/OMPRASAD/.gemini/antigravity-ide/scratch/WindCast%20AI/backend/app/api/deps.py)
+Provide `get_current_user` dependency validating the Bearer string.
+
+#### [MODIFY] [main.py (FastAPI)](file:///c:/Users/OMPRASAD/.gemini/antigravity-ide/scratch/WindCast%20AI/backend/app/main.py)
+Mount CORS middlewares resolving CORS preflights and option checks.
+
+---
+
+## Verification Plan
+
+### Automated Connection Tests
+1. Run backend tests to verify token decryptions using pytest: `pytest tests/test_endpoints.py`.
+2. Run next-config checks to verify environment loadings.
+
+### Manual Verification
+1. Start FastAPI: `uvicorn app.main:app --port 8000`.
+2. Launch Next.js: `npm run dev`.
+3. Open the Network tab and verify:
+   - Successful `OPTIONS` preflight checks.
+   - Headers containing `Authorization: Bearer <token>`.
+   - WebSocket connection handshake returning `101 Switching Protocols` and successfully receiving updates every 2 seconds.
