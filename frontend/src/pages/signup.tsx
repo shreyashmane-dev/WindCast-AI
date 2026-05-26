@@ -12,30 +12,30 @@ export default function SignupPage() {
         <title>WindCast AI – Register Edge Terminal</title>
       </Head>
 
-      <div className="min-h-screen w-full bg-dark-deep bg-cyber-grid text-slate-100 flex items-stretch overflow-hidden relative">
+      <div className="min-h-screen w-full bg-background bg-grid-pattern text-on-surface flex items-stretch overflow-hidden relative">
         
         {/* Dynamic Background Lights */}
-        <div className="bg-ambient bg-emerald-500/10 top-[-100px] left-[-100px]" />
-        <div className="bg-ambient bg-blue-600/5 bottom-[-200px] right-[-100px]" />
+        <div className="absolute top-[-100px] left-[-100px] w-[500px] h-[500px] bg-secondary/5 blur-[120px] rounded-full pointer-events-none z-0" />
+        <div className="absolute bottom-[-200px] right-[-100px] w-[500px] h-[500px] bg-tertiary/5 blur-[120px] rounded-full pointer-events-none z-0" />
 
         {/* 1. Left Cinematic Visual Half (Hidden on mobile/tablet) */}
-        <div className="hidden lg:flex flex-1 flex-col justify-between p-10 bg-slate-950/45 border-r border-glass-border relative overflow-hidden">
+        <div className="hidden lg:flex flex-1 flex-col justify-between p-10 bg-surface-container/20 border-r border-white/5 relative overflow-hidden">
           
           {/* Neon Grid Backlit Halo */}
-          <div className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 h-[380px] w-[380px] rounded-full bg-emerald-500/5 filter blur-[80px]" />
-          <div className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full border border-emerald-500/10 animate-spin-slow opacity-30" style={{ animationDuration: '50s' }} />
+          <div className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 h-[380px] w-[380px] rounded-full bg-secondary/5 filter blur-[80px]" />
+          <div className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full border border-secondary/10 animate-spin-slow opacity-30" style={{ animationDuration: '50s' }} />
 
           {/* Top branding logo */}
           <div className="flex items-center gap-3 select-none relative z-10">
-            <div className="h-10 w-10 rounded-lg bg-cyan-500/10 border border-cyan-500/40 flex items-center justify-center">
-              <Wind size={22} className="text-cyan-400 animate-spin-slow" />
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-fixed-dim to-secondary flex items-center justify-center shadow-[0_0_12px_rgba(116,245,255,0.4)] shrink-0">
+              <Wind size={18} className="text-surface-container-lowest" />
             </div>
             <div className="flex flex-col">
-              <span className="text-md font-bold tracking-wider text-slate-100">
-                WINDCAST <span className="text-cyan-400 text-glow-cyan">AI</span>
+              <span className="text-sm font-bold tracking-wider text-primary">
+                WINDCAST <span className="text-secondary font-bold font-mono">AI</span>
               </span>
-              <span className="text-[9px] font-mono tracking-widest text-slate-500 uppercase -mt-0.5">
-                Renewables core
+              <span className="text-[9px] font-mono tracking-widest text-on-surface-variant opacity-80 uppercase -mt-0.5">
+                Renewables Core
               </span>
             </div>
           </div>
@@ -47,21 +47,21 @@ export default function SignupPage() {
             transition={{ duration: 0.8 }}
             className="relative z-10 w-full flex items-center justify-center my-6"
           >
-            <WindTurbine windSpeed={10.5} height={340} glowColor="#10b981" />
+            <WindTurbine windSpeed={10.5} height={340} glowColor="#4edea3" />
           </motion.div>
 
           {/* Bottom dispatch logs */}
-          <div className="w-full max-w-sm bg-slate-950/70 border border-glass-border p-4 rounded-xl font-mono text-[9px] text-slate-500 relative z-10 shadow-2xl">
-            <div className="flex justify-between items-center pb-2 border-b border-glass-border/30 mb-2">
-              <span className="text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+          <div className="w-full max-w-sm glass-panel p-4 rounded-xl font-mono text-[9px] text-on-surface-variant relative z-10 shadow-2xl">
+            <div className="flex justify-between items-center pb-2 border-b border-white/5 mb-2">
+              <span className="text-secondary font-bold uppercase tracking-wider flex items-center gap-1.5">
                 <Hammer size={12} className="animate-pulse" />
                 TERMINAL BUILDER
               </span>
               <span>NODE: WCAST-NEW</span>
             </div>
             <div className="flex flex-col gap-1 text-[8px] leading-relaxed">
-              <div>&gt; INITIATING IDENTITY PROTOCOL SETUP... <span className="text-cyan-400">READY</span></div>
-              <div>&gt; ALLOCATING PERSISTENT OPERATOR INDEX... <span className="text-slate-400">SYNCED</span></div>
+              <div>&gt; INITIATING IDENTITY PROTOCOL SETUP... <span className="text-primary">READY</span></div>
+              <div>&gt; ALLOCATING PERSISTENT OPERATOR INDEX... <span className="text-on-surface-variant opacity-70">SYNCED</span></div>
               <div>&gt; GRIDS STATUS: SECURE CHANNELS ESTABLISHED</div>
             </div>
           </div>

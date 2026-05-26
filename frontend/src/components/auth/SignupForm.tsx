@@ -233,9 +233,8 @@ export default function SignupForm() {
                 return (
                   <div
                     key={`strength-block-${index}`}
-                    className={`h-1.5 rounded-sm transition-all duration-300 ${
-                      isLit ? getStrengthColor() : "bg-slate-900 border border-glass-border"
-                    }`}
+                    className={`h-1.5 rounded-sm transition-all duration-300 ${isLit ? getStrengthColor() : "bg-slate-900 border border-glass-border"
+                      }`}
                   />
                 );
               })}
@@ -282,9 +281,8 @@ export default function SignupForm() {
         <button
           type="submit"
           disabled={status === "loading" || status === "success"}
-          className={`w-full py-2.5 rounded-lg font-mono font-bold text-sm tracking-widest text-slate-950 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] ${
-            (status === "loading" || status === "success") && "opacity-50 cursor-wait hover:shadow-[0_0_15px_rgba(16,185,129,0.2)]"
-          }`}
+          className={`w-full py-2.5 rounded-lg font-mono font-bold text-sm tracking-widest text-slate-950 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] ${(status === "loading" || status === "success") && "opacity-50 cursor-wait hover:shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+            }`}
         >
           {status === "loading" ? (
             <>

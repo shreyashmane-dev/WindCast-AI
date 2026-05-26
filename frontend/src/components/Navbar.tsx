@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
-import { Wind, Menu, X, Globe, User, Cpu, AlertTriangle } from "lucide-react";
+import { Wind, Menu, X, Bell, HelpCircle, User, Search } from "lucide-react";
 
 interface NavbarProps {
   activeModel?: string;
   isSimulating?: boolean;
 }
 
-export default function Navbar({ activeModel = "Random Forest", isSimulating = true }: NavbarProps) {
+export default function Navbar({ activeModel = "LSTM-X4 Deep Net", isSimulating = true }: NavbarProps) {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -17,91 +17,74 @@ export default function Navbar({ activeModel = "Random Forest", isSimulating = t
     { name: "Overview", path: "/dashboard" },
     { name: "Predict Power", path: "/predictions" },
     { name: "Compare Models", path: "/comparison" },
+    { name: "About Us", path: "/about" },
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 h-16 glass-panel border-b border-glass-border z-40 px-6 flex items-center justify-between">
-      {/* Brand Logo */}
-      <Link href="/" className="flex items-center gap-3 select-none group">
-        <div className="relative flex items-center justify-center h-10 w-10 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-600/30 border border-cyan-500/40 group-hover:border-cyan-400 group-hover:shadow-[0_0_12px_rgba(6,182,212,0.4)] transition-all">
-          <Wind size={22} className="text-cyan-400 animate-spin-slow group-hover:scale-105 transition-transform" />
-          <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,1)]"></span>
+    <header className="bg-surface/60 backdrop-blur-md fixed top-0 left-0 right-0 w-full h-16 z-50 border-b border-white/10 shadow-[0_0_20px_rgba(111,60,216,0.15)] flex justify-between items-center px-6 transition-all duration-300">
+      {/* Left section: Search bar on desktop shifted left (under desktop sidebar layout) */}
+      <div className="flex items-center gap-4 md:pl-64 transition-all duration-300">
+        <div className="hidden md:flex items-center bg-surface-container-highest/50 rounded-full px-4 py-2 border border-white/5 focus-within:border-primary-fixed-dim/50 transition-colors">
+          <Search size={16} className="text-on-surface-variant mr-2" />
+          <input 
+            className="bg-transparent border-none text-on-surface focus:ring-0 p-0 text-xs w-48 placeholder-on-surface-variant/50 focus:outline-none" 
+            placeholder="Search parameters..." 
+            type="text"
+          />
         </div>
-        <div className="flex flex-col">
-          <span className="text-md font-bold tracking-wider text-slate-100 bg-gradient-to-r from-slate-100 to-slate-400 bg-clip-text">
-            WINDCAST <span className="text-cyan-400 text-glow-cyan font-bold font-mono">AI</span>
-          </span>
-          <span className="text-[9px] font-mono tracking-widest text-slate-500 uppercase -mt-0.5">Energy Forecaster</span>
+      </div>
+
+      {/* Mobile Logo: visible only on mobile when sidebar is hidden */}
+      <Link href="/" className="md:hidden flex items-center gap-2 select-none group">
+        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-fixed-dim to-secondary flex items-center justify-center shadow-[0_0_12px_rgba(0,242,255,0.4)] transition-all">
+          <Wind size={18} className="text-surface-container-lowest animate-spin-slow" />
         </div>
+        <span className="font-bold tracking-tighter text-lg text-primary bg-gradient-to-r from-primary to-secondary bg-clip-text">
+          WindCast AI
+        </span>
       </Link>
 
-      {/* Desktop Metrics / Status Pills */}
-      <div className="hidden lg:flex items-center gap-4">
-        {/* Model Pill */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/60 border border-glass-border text-xs text-slate-300">
-          <Cpu size={13} className="text-cyan-400" />
-          <span>AI Model:</span>
-          <span className="font-semibold text-cyan-400">{activeModel}</span>
+      {/* Right Controls */}
+      <div className="flex items-center gap-4">
+        {/* Active Pill indicators for Desktop */}
+        <div className="hidden lg:flex items-center gap-3 mr-2">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high/40 border border-white/5 text-[11px] text-on-surface-variant">
+            <span>Model:</span>
+            <span className="font-semibold text-primary-fixed-dim">{activeModel}</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high/40 border border-white/5 text-[11px] text-on-surface-variant">
+            <span className={`h-1.5 w-1.5 rounded-full ${isSimulating ? "bg-secondary animate-pulse" : "bg-outline"}`}></span>
+            <span>Feed:</span>
+            <span className={`font-semibold ${isSimulating ? "text-secondary" : "text-outline"}`}>
+              {isSimulating ? "LIVE" : "PAUSED"}
+            </span>
+          </div>
         </div>
 
-        {/* Sync Pill */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/60 border border-glass-border text-xs text-slate-300">
-          <span className={`h-1.5 w-1.5 rounded-full ${isSimulating ? "bg-emerald-400 animate-pulse" : "bg-amber-400"}`}></span>
-          <span>Simulator:</span>
-          <span className={`font-semibold ${isSimulating ? "text-emerald-400" : "text-amber-400"}`}>
-            {isSimulating ? "ACTIVE" : "PAUSED"}
-          </span>
-        </div>
-      </div>
+        {/* Notifications & Help */}
+        <button className="text-on-surface-variant hover:text-primary transition-colors cursor-pointer select-none active:scale-95 duration-200">
+          <Bell size={20} />
+        </button>
+        <button className="text-on-surface-variant hover:text-primary transition-colors cursor-pointer select-none active:scale-95 duration-200">
+          <HelpCircle size={20} />
+        </button>
 
-      {/* Navigation Links - Desktop */}
-      <div className="hidden md:flex items-center gap-8">
-        {links.map((link) => {
-          const isActive = router.pathname === link.path;
-          return (
-            <Link key={link.path} href={link.path}>
-              <span
-                className={`text-sm cursor-pointer relative py-2 transition-colors duration-200 ${
-                  isActive ? "text-red-600 font-bold" : "text-slate-600 hover:text-red-600"
-                }`}
-              >
-                {link.name}
-                {isActive && (
-                  <motion.span
-                    layoutId="activeNavIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-red-500 to-red-600 rounded-full"
-                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                  />
-                )}
-              </span>
-            </Link>
-          );
-        })}
-      </div>
-
-      {/* Profile/System Actions */}
-      <div className="flex items-center gap-3">
-        {/* Sync Status Button */}
-        <div className="hidden sm:flex p-2 rounded-lg bg-slate-100 border border-glass-border hover:border-red-500/50 text-slate-600 hover:text-red-600 transition-all cursor-pointer">
-          <Globe size={16} className="animate-pulse" />
+        {/* Profile */}
+        <div className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer select-none active:scale-95 duration-200">
+          <User size={20} className="text-primary" />
+          <span className="hidden md:inline text-xs font-semibold tracking-wide">Analyst Profile</span>
         </div>
 
-        {/* User Pill */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-50 border border-red-200/50 text-xs text-slate-800 font-bold">
-          <User size={14} className="text-red-600" />
-          <span className="hidden sm:inline font-mono">OP-ENGINEER</span>
-        </div>
-
-        {/* Mobile Menu Toggle */}
+        {/* Mobile menu trigger */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg bg-slate-100 border border-glass-border text-slate-600 hover:text-red-600 hover:border-red-500/45 transition-all"
+          className="md:hidden p-2 rounded-lg bg-surface-container border border-white/5 text-on-surface-variant hover:text-primary active:scale-95 transition-all"
         >
-          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>
 
-      {/* Mobile Drawer Navigation */}
+      {/* Mobile Drawer Drawer Navigation */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -109,53 +92,47 @@ export default function Navbar({ activeModel = "Random Forest", isSimulating = t
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-16 left-0 right-0 glass-panel border-b border-glass-border flex flex-col p-6 gap-4 z-50 md:hidden bg-slate-950/95"
+            className="absolute top-16 left-0 right-0 glass-panel-heavy border-b border-white/10 flex flex-col p-6 gap-4 z-50 md:hidden"
           >
-            {/* Status indicators for mobile */}
-            <div className="flex flex-col gap-2 pb-4 border-b border-glass-border/30">
-              <div className="flex justify-between items-center text-xs text-slate-400">
-                <span>AI Model:</span>
-                <span className="text-cyan-400 font-semibold">{activeModel}</span>
-              </div>
-              <div className="flex justify-between items-center text-xs text-slate-400">
-                <span>Simulator:</span>
-                <span className={isSimulating ? "text-emerald-400 font-semibold animate-pulse" : "text-amber-400 font-semibold"}>
-                  {isSimulating ? "ACTIVE" : "PAUSED"}
-                </span>
-              </div>
+            {/* Status indicators */}
+            <div className="flex justify-between items-center text-xs pb-3 border-b border-white/5 text-on-surface-variant">
+              <span>AI Core Model:</span>
+              <span className="text-primary-fixed-dim font-bold font-mono">{activeModel}</span>
             </div>
 
             {/* Menu Links */}
-            {links.map((link) => {
-              const isActive = router.pathname === link.path;
-              return (
-                <Link key={link.path} href={link.path} onClick={() => setMobileMenuOpen(false)}>
-                  <div
-                    className={`py-2 px-3 rounded-lg text-sm transition-all ${
-                      isActive
-                        ? "bg-red-50 text-red-600 border border-red-200"
-                        : "text-slate-600 hover:text-red-600"
-                    }`}
-                  >
-                    {link.name}
-                  </div>
-                </Link>
-              );
-            })}
+            <div className="flex flex-col gap-2">
+              {links.map((link) => {
+                const isActive = router.pathname === link.path;
+                return (
+                  <Link key={link.path} href={link.path} onClick={() => setMobileMenuOpen(false)}>
+                    <div
+                      className={`py-2.5 px-3 rounded-lg text-sm transition-all ${
+                        isActive
+                          ? "bg-primary-container/10 border border-primary/20 text-primary"
+                          : "text-on-surface-variant hover:text-on-surface"
+                      }`}
+                    >
+                      {link.name}
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
 
-            {/* Close Button at bottom of drawer */}
+            {/* Close Button */}
             <button
               onClick={() => {
                 router.push("/");
                 setMobileMenuOpen(false);
               }}
-              className="mt-2 w-full py-2.5 text-center text-xs bg-slate-100 border border-glass-border hover:border-red-500 rounded-lg text-slate-700 hover:text-red-600 transition-all font-semibold"
+              className="mt-2 w-full py-2.5 text-center text-xs bg-surface-container border border-white/5 hover:border-primary/50 text-on-surface hover:text-primary rounded-lg transition-all font-semibold uppercase tracking-wider"
             >
               Enter Home
             </button>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </header>
   );
 }

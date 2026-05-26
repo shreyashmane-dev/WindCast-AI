@@ -12,30 +12,30 @@ export default function LoginPage() {
         <title>WindCast AI – Operator Authorization</title>
       </Head>
 
-      <div className="min-h-screen w-full bg-dark-deep bg-cyber-grid text-slate-100 flex items-stretch overflow-hidden relative">
+      <div className="min-h-screen w-full bg-background bg-grid-pattern text-on-surface flex items-stretch overflow-hidden relative">
         
         {/* Dynamic Background Halo Lights */}
-        <div className="bg-ambient bg-cyan-500/10 top-[-100px] left-[-100px]" />
-        <div className="bg-ambient bg-blue-600/5 bottom-[-200px] right-[-100px]" />
+        <div className="absolute top-[-100px] left-[-100px] w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none z-0" />
+        <div className="absolute bottom-[-200px] right-[-100px] w-[500px] h-[500px] bg-tertiary/5 blur-[120px] rounded-full pointer-events-none z-0" />
 
         {/* 1. Left Cinematic Visual Half (Hidden on mobile/tablet) */}
-        <div className="hidden lg:flex flex-1 flex-col justify-between p-10 bg-slate-950/45 border-r border-glass-border relative overflow-hidden">
+        <div className="hidden lg:flex flex-1 flex-col justify-between p-10 bg-surface-container/20 border-r border-white/5 relative overflow-hidden">
           
           {/* Neon Grid Backlit Halo */}
-          <div className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 h-[380px] w-[380px] rounded-full bg-cyan-500/5 filter blur-[80px]" />
-          <div className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full border border-cyan-500/10 animate-spin-slow opacity-30" style={{ animationDuration: '40s' }} />
+          <div className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 h-[380px] w-[380px] rounded-full bg-primary/5 filter blur-[80px]" />
+          <div className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full border border-primary/10 animate-spin-slow opacity-30" style={{ animationDuration: '40s' }} />
 
           {/* Top branding logo */}
           <div className="flex items-center gap-3 select-none relative z-10">
-            <div className="h-10 w-10 rounded-lg bg-cyan-500/10 border border-cyan-500/40 flex items-center justify-center">
-              <Wind size={22} className="text-cyan-400 animate-spin-slow" />
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-fixed-dim to-secondary flex items-center justify-center shadow-[0_0_12px_rgba(116,245,255,0.4)] shrink-0">
+              <Wind size={18} className="text-surface-container-lowest" />
             </div>
             <div className="flex flex-col">
-              <span className="text-md font-bold tracking-wider text-slate-100">
-                WINDCAST <span className="text-cyan-400 text-glow-cyan">AI</span>
+              <span className="text-sm font-bold tracking-wider text-primary">
+                WINDCAST <span className="text-secondary font-bold font-mono">AI</span>
               </span>
-              <span className="text-[9px] font-mono tracking-widest text-slate-500 uppercase -mt-0.5">
-                Renewables core
+              <span className="text-[9px] font-mono tracking-widest text-on-surface-variant opacity-80 uppercase -mt-0.5">
+                Renewables Core
               </span>
             </div>
           </div>
@@ -47,21 +47,21 @@ export default function LoginPage() {
             transition={{ duration: 0.8 }}
             className="relative z-10 w-full flex items-center justify-center my-6"
           >
-            <WindTurbine windSpeed={9.0} height={340} glowColor="#06b6d4" />
+            <WindTurbine windSpeed={9.0} height={340} glowColor="#00f2ff" />
           </motion.div>
 
           {/* Bottom security dispatch logs */}
-          <div className="w-full max-w-sm bg-slate-950/70 border border-glass-border p-4 rounded-xl font-mono text-[9px] text-slate-500 relative z-10 shadow-2xl">
-            <div className="flex justify-between items-center pb-2 border-b border-glass-border/30 mb-2">
-              <span className="text-cyan-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+          <div className="w-full max-w-sm glass-panel p-4 rounded-xl font-mono text-[9px] text-on-surface-variant relative z-10 shadow-2xl">
+            <div className="flex justify-between items-center pb-2 border-b border-white/5 mb-2">
+              <span className="text-primary font-bold uppercase tracking-wider flex items-center gap-1.5">
                 <ShieldCheck size={12} className="animate-pulse" />
                 GRID ACCESS PORT
               </span>
               <span>NODE: OP-04</span>
             </div>
             <div className="flex flex-col gap-1 text-[8px] leading-relaxed">
-              <div>&gt; INITIALIZING SECURITY INTERCEPT... <span className="text-emerald-400">READY</span></div>
-              <div>&gt; AUTH RESOLVED VIA BEARER PROTOCOLS... <span className="text-slate-400">WAITING</span></div>
+              <div>&gt; INITIALIZING SECURITY INTERCEPT... <span className="text-secondary">READY</span></div>
+              <div>&gt; AUTH RESOLVED VIA BEARER PROTOCOLS... <span className="text-on-surface-variant opacity-70">WAITING</span></div>
               <div>&gt; EDGE ENCRYPTION KEYS: SHIELD ACTIVE [256-BIT]</div>
             </div>
           </div>
