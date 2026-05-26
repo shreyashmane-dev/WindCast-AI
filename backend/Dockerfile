@@ -32,7 +32,6 @@ ENV PATH=/home/appuser/.local/bin:$PATH
 # Copy backend files and configurations
 COPY --chown=appuser:appuser app/ ./app/
 COPY --chown=appuser:appuser trained_models/ ./trained_models/
-COPY --chown=appuser:appuser .env ./
 
 # Segregate directory permissions
 RUN mkdir -p secret && chown -R appuser:appuser secret/

@@ -15,9 +15,16 @@ env/
 # (Prevents GitHub push failures due to >100MB file size limits)
 backend/trained_models/*.joblib
 backend/trained_models/*.pkl
-backend/trained_models/random_forest.*
-backend/trained_models/xgboost.*
-trained_models/
+# Allow committing lightweight model files to ensure the application works out-of-the-box
+!backend/trained_models/linear_regression.joblib
+!backend/trained_models/lstm_scaler.joblib
+!backend/trained_models/xgboost.joblib
+!backend/trained_models/best_model.joblib
+!backend/trained_models/best_model.pkl
+backend/trained_models/random_forest.joblib
+backend/trained_models/random_forest.pkl
+
+/trained_models/
 models/
 model_legacy/
 

@@ -1,0 +1,39 @@
+{
+  "best_model": "xgboost",
+  "best_display_name": "XGBoost",
+  "feature_columns": [
+    "temperature",
+    "relativehu",
+    "dewpoint",
+    "windspeed",
+    "winddirec",
+    "windgust",
+    "hour",
+    "day",
+    "month",
+    "hour_sin",
+    "hour_cos",
+    "month_sin",
+    "month_cos",
+    "winddirec_sin",
+    "winddirec_cos",
+    "windspeed_sq",
+    "windspeed_cu",
+    "gust_factor",
+    "gust_delta",
+    "temp_dew_spread",
+    "location_location1",
+    "location_location2",
+    "location_location3",
+    "location_location4"
+  ],
+  "target_column": "Power",
+  "dataset_path": "C:\\Users\\OMPRASAD\\.gemini\\antigravity-ide\\scratch\\WindCast AI\\data\\wind.csv",
+  "rows": 175200,
+  "lstm_model": null,
+  "lstm_lookback": 24,
+  "lstm_status": {
+    "trained": false,
+    "reason": "TensorFlow/Keras is not installed for this Python interpreter. LSTM was not trained; use Python 3.11 with backend/requirements.txt to create lstm.h5."
+  }
+}
