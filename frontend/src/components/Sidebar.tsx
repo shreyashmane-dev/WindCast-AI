@@ -11,8 +11,10 @@ import {
   ChevronLeft,
   ChevronRight,
   Wind,
-  Sparkles
+  Sparkles,
+  LogOut
 } from "lucide-react";
+import { useAuth } from "../services/auth";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -21,13 +23,14 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const router = useRouter();
+  const { logout } = useAuth();
 
   const menuItems = [
     { name: "Overview", icon: LayoutDashboard, path: "/dashboard" },
     { name: "Predict Power", icon: Cpu, path: "/predictions" },
     { name: "Compare Models", icon: GitCompare, path: "/comparison" },
     { name: "About Us", icon: Info, path: "/about" },
-    { name: "Home Portal", icon: Home, path: "/" },
+    { name: "Logout", icon: LogOut, path: "/login" },
   ];
 
   return (
@@ -85,11 +88,24 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
           {menuItems.map((item) => {
             const isActive = router.pathname === item.path;
             return (
-              <Link key={item.path} href={item.path} className="relative block">
+              <Link
+                key={item.path}
+                href={item.path}
+                className="relative block"
+                onClick={async (e) => {
+                  if (item.name === "Logout") {
+                    e.preventDefault();
+                    await logout();
+                    router.push("/login");
+                  }
+                }}
+              >
                 <div
                   className={`flex items-center gap-4 px-4 py-3 rounded-lg cursor-pointer transition-all duration-300 relative group overflow-hidden ${
                     isActive
                       ? "text-primary bg-primary-container/20 border-r-4 border-primary shadow-[inset_0_0_15px_rgba(0,219,231,0.2)] font-medium"
+                      : item.name === "Logout"
+                      ? "text-on-surface-variant hover:bg-error/10 hover:text-error"
                       : "text-on-surface-variant hover:bg-surface-bright/50 hover:text-on-surface"
                   }`}
                 >

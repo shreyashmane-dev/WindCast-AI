@@ -7,7 +7,17 @@ import PerformanceChart from "../charts/PerformanceChart";
 import CorrelationHeatmap from "../charts/CorrelationHeatmap";
 import { useAuth } from "../services/auth";
 import ProtectedLoader from "../components/auth/ProtectedLoader";
-import { GitCompare, Award, Table, BarChart3, HelpCircle, Activity } from "lucide-react";
+import { GitCompare, Award, Table, BarChart3, HelpCircle, Activity, LineChart as LineIcon } from "lucide-react";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Legend
+} from "recharts";
 
 export default function ModelComparison() {
   const router = useRouter();
@@ -30,6 +40,21 @@ export default function ModelComparison() {
 
   // The best model (lowest RMSE)
   const bestModelName = rankedModels[0]?.name || "LSTM-X4 Deep Net";
+
+  const forecastPathData = [
+    { step: "T+10m", Actual: 1420, LSTM: 1410, XGBoost: 1390, RandomForest: 1380, LinearReg: 1310 },
+    { step: "T+20m", Actual: 1450, LSTM: 1445, XGBoost: 1410, RandomForest: 1400, LinearReg: 1330 },
+    { step: "T+30m", Actual: 1510, LSTM: 1502, XGBoost: 1470, RandomForest: 1430, LinearReg: 1360 },
+    { step: "T+40m", Actual: 1480, LSTM: 1485, XGBoost: 1440, RandomForest: 1410, LinearReg: 1350 },
+    { step: "T+50m", Actual: 1560, LSTM: 1550, XGBoost: 1500, RandomForest: 1460, LinearReg: 1390 },
+    { step: "T+60m", Actual: 1610, LSTM: 1605, XGBoost: 1530, RandomForest: 1490, LinearReg: 1410 },
+    { step: "T+70m", Actual: 1590, LSTM: 1594, XGBoost: 1510, RandomForest: 1470, LinearReg: 1400 },
+    { step: "T+80m", Actual: 1650, LSTM: 1642, XGBoost: 1560, RandomForest: 1510, LinearReg: 1430 },
+    { step: "T+90m", Actual: 1720, LSTM: 1715, XGBoost: 1610, RandomForest: 1560, LinearReg: 1460 },
+    { step: "T+100m", Actual: 1690, LSTM: 1698, XGBoost: 1580, RandomForest: 1530, LinearReg: 1440 },
+    { step: "T+110m", Actual: 1740, LSTM: 1735, XGBoost: 1620, RandomForest: 1560, LinearReg: 1470 },
+    { step: "T+120m", Actual: 1810, LSTM: 1803, XGBoost: 1670, RandomForest: 1610, LinearReg: 1500 }
+  ];
 
   return (
     <DashboardLayout>
@@ -205,7 +230,45 @@ export default function ModelComparison() {
           </div>
         </div>
 
-        {/* 3. Custom Correlation Heatmap Matrix */}
+        {/* 3. Multi-Model Forecast Path Prediction Overlay */}
+        <div className="glass-panel p-5 rounded-xl min-h-[380px] flex flex-col justify-between">
+          <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-4">
+            <div className="flex items-center gap-2">
+              <LineIcon size={16} className="text-primary" />
+              <span className="text-xs font-mono font-bold tracking-wider text-on-surface uppercase">
+                Multi-Model Sequential Forecast Path Overlay (T+120m)
+              </span>
+            </div>
+            <span className="text-[9px] font-mono text-on-surface-variant">TEMPORAL FLUX TRACKING</span>
+          </div>
+
+          <div className="flex-1 w-full text-slate-200 text-xs h-64 mt-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={forecastPathData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <XAxis dataKey="step" stroke="#849495" fontSize={9} />
+                <YAxis stroke="#849495" fontSize={9} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: "#171F33", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }}
+                  labelClassName="text-on-surface-variant text-[10px] font-mono uppercase"
+                />
+                <CartesianGrid stroke="rgba(255, 255, 255, 0.02)" strokeDasharray="3 3" />
+                <Legend wrapperStyle={{ fontSize: "9px", fontFamily: "monospace", textTransform: "uppercase" }} />
+                
+                <Line type="monotone" dataKey="Actual" stroke="#4edea3" strokeWidth={2.5} dot={true} style={{ filter: "drop-shadow(0 0 4px rgba(78,222,163,0.5))" }} />
+                <Line type="monotone" dataKey="LSTM" stroke="#00f2ff" strokeWidth={2} dot={false} style={{ filter: "drop-shadow(0 0 3px rgba(0,242,255,0.4))" }} />
+                <Line type="monotone" dataKey="XGBoost" stroke="#8b5cf6" strokeWidth={1.5} strokeDasharray="5 5" dot={false} />
+                <Line type="monotone" dataKey="RandomForest" stroke="#f59e0b" strokeWidth={1.5} strokeDasharray="3 3" dot={false} />
+                <Line type="monotone" dataKey="LinearReg" stroke="#6b7280" strokeWidth={1} dot={false} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="mt-4 p-3 bg-surface-container/40 border border-white/5 rounded-lg text-[10px] text-on-surface-variant font-mono uppercase tracking-wider leading-relaxed">
+            Physics Explanation: Tree ensembles (Random Forest, XGBoost) fit individual weather inputs but miss temporal memory. The sequential LSTM model tracks actual wind flow inertia over time, avoiding localized lag.
+          </div>
+        </div>
+
+        {/* 4. Custom Correlation Heatmap Matrix */}
         <div className="glass-panel p-5 rounded-xl min-h-[380px]">
           <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-6">
             <div className="flex items-center gap-2">

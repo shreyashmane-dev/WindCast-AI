@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
-import { Wind, Menu, X, Bell, HelpCircle, User, Search } from "lucide-react";
+import { Wind, Menu, X, Bell, HelpCircle, User, Search, LogOut } from "lucide-react";
+import { useAuth } from "../services/auth";
 
 interface NavbarProps {
   activeModel?: string;
@@ -11,7 +12,9 @@ interface NavbarProps {
 
 export default function Navbar({ activeModel = "LSTM-X4 Deep Net", isSimulating = true }: NavbarProps) {
   const router = useRouter();
+  const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   const links = [
     { name: "Overview", path: "/dashboard" },
@@ -69,10 +72,57 @@ export default function Navbar({ activeModel = "LSTM-X4 Deep Net", isSimulating 
           <HelpCircle size={20} />
         </button>
 
-        {/* Profile */}
-        <div className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer select-none active:scale-95 duration-200">
-          <User size={20} className="text-primary" />
-          <span className="hidden md:inline text-xs font-semibold tracking-wide">Analyst Profile</span>
+        {/* Profile with Dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+            className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer select-none active:scale-95 duration-200 focus:outline-none"
+          >
+            <User size={20} className="text-primary" />
+            <span className="hidden md:inline text-xs font-semibold tracking-wide">
+              {user ? user.name : "Analyst Profile"}
+            </span>
+          </button>
+
+          <AnimatePresence>
+            {profileDropdownOpen && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setProfileDropdownOpen(false)} />
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 mt-3 w-48 glass-panel-heavy border border-white/10 rounded-xl shadow-2xl z-50 p-4 font-mono text-[10px]"
+                >
+                  {user ? (
+                    <div className="pb-3 border-b border-white/5 mb-3">
+                      <p className="font-bold text-on-surface truncate text-xs">{user.name}</p>
+                      <p className="text-[9px] text-on-surface-variant truncate mt-0.5 uppercase tracking-wider">{user.role}</p>
+                      <p className="text-[8px] text-on-surface-variant/75 truncate mt-0.5">{user.terminalId}</p>
+                    </div>
+                  ) : (
+                    <div className="pb-3 border-b border-white/5 mb-3">
+                      <p className="font-bold text-on-surface">Not Authorized</p>
+                      <p className="text-[8px] text-on-surface-variant mt-0.5">Please sign in</p>
+                    </div>
+                  )}
+                  
+                  <button
+                    onClick={async () => {
+                      setProfileDropdownOpen(false);
+                      await logout();
+                      router.push("/login");
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-2.5 bg-error/10 hover:bg-error/20 text-error rounded-lg transition-all text-left uppercase font-bold tracking-wider font-mono cursor-pointer border border-error/20"
+                  >
+                    <LogOut size={12} />
+                    <span>Logout</span>
+                  </button>
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Mobile menu trigger */}
@@ -120,15 +170,16 @@ export default function Navbar({ activeModel = "LSTM-X4 Deep Net", isSimulating 
               })}
             </div>
 
-            {/* Close Button */}
+            {/* Logout Button */}
             <button
-              onClick={() => {
-                router.push("/");
+              onClick={async () => {
+                await logout();
                 setMobileMenuOpen(false);
+                router.push("/login");
               }}
-              className="mt-2 w-full py-2.5 text-center text-xs bg-surface-container border border-white/5 hover:border-primary/50 text-on-surface hover:text-primary rounded-lg transition-all font-semibold uppercase tracking-wider"
+              className="mt-2 w-full py-2.5 text-center text-xs bg-error/15 border border-error/30 hover:bg-error/25 text-error rounded-lg transition-all font-semibold uppercase tracking-wider font-mono"
             >
-              Enter Home
+              Logout Operator
             </button>
           </motion.div>
         )}

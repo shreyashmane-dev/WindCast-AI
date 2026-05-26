@@ -30,11 +30,14 @@ app = FastAPI(
 app.add_middleware(StructuredLoggingMiddleware)
 
 # Configure Production-safe CORS Middleware resolving OPTIONS preflights
-# Allow local Next.js client (localhost:3000) and deployed Vercel domains securely!
+# Allow local Next.js client (localhost:3000) and wildcard/deployed Vercel domains securely!
+allow_origins = settings.allowed_origins_list
+allow_credentials = "*" not in allow_origins
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.allowed_origins_list,
-    allow_credentials=True,
+    allow_origins=allow_origins,
+    allow_credentials=allow_credentials,
     allow_methods=["*"],
     allow_headers=["*"],
 )

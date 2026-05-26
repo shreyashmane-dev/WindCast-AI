@@ -19,6 +19,7 @@ backend/trained_models/random_forest.*
 backend/trained_models/xgboost.*
 trained_models/
 models/
+model_legacy/
 
 # Node.js / Next.js caches
 node_modules/

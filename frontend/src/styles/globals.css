@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
 @import "tailwindcss";
 
 @theme {
@@ -56,42 +58,42 @@
   body {
     background-color: #0B1326;
     color: #DAE2FD;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 15px;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-size: 16.5px;
     line-height: 1.6;
     overflow-x: hidden;
   }
   
   h1 {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
     color: #DAE2FD;
-    font-size: 32px !important;
+    font-size: 36px !important;
     font-weight: 700;
   }
   
   h2 {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
     color: #DAE2FD;
-    font-size: 26px !important;
+    font-size: 28px !important;
     font-weight: 650;
   }
   
   h3 {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
     color: #DAE2FD;
-    font-size: 20px !important;
+    font-size: 22px !important;
     font-weight: 600;
   }
 
   h4, h5, h6 {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
     color: #DAE2FD;
-    font-size: 16px !important;
+    font-size: 18px !important;
     font-weight: 600;
   }
 
   p {
-    font-size: 15px !important;
+    font-size: 16px !important;
     color: #B9CACB;
   }
 }
