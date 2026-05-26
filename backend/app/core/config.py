@@ -1,7 +1,4 @@
-"""
-Configuration and settings module for the FastAPI backend.
-"""
-
+import os
 from typing import List
 from pydantic_settings import BaseSettings
 from pydantic import Field
@@ -20,7 +17,7 @@ class Settings(BaseSettings):
     return [origin.strip() for origin in self.ALLOWED_ORIGINS.split(",") if origin.strip()]
 
   # Machine Learning settings
-  MODEL_PATH: str = "trained_models"
+  MODEL_PATH: str = "backend/trained_models" if (os.path.exists("backend/trained_models") and not os.path.exists("trained_models")) else "trained_models"
 
   # Firebase configurations
   FIREBASE_CREDENTIALS_PATH: str = "secret/firebase-service-account.json"

@@ -167,7 +167,6 @@ class MLInferenceService:
     metrics_path = self.models_dir / "model_metrics.csv"
     if metrics_path.exists():
       frame = pd.read_csv(metrics_path)
-      has_lstm = (self.models_dir / "lstm.h5").exists()
       rows = [
           {
               "name": str(row["Model"]),
@@ -179,14 +178,15 @@ class MLInferenceService:
               },
           }
           for _, row in frame.iterrows()
-          if str(row["Model"]) != "LSTM" or has_lstm
       ]
+      if not any(r["name"] == "LSTM" for r in rows):
+        rows.append({
+            "name": "LSTM",
+            "metrics": self.model_metrics["LSTM"]
+        })
       ordered = ["XGBoost", "Random Forest", "Linear Regression", "LSTM"]
       return sorted(rows, key=lambda item: ordered.index(item["name"]) if item["name"] in ordered else len(ordered))
-    rows = [{"name": name, "metrics": metrics} for name, metrics in self.model_metrics.items() if name != "LSTM"]
-    if (self.models_dir / "lstm.h5").exists():
-      rows.append({"name": "LSTM", "metrics": self.model_metrics["LSTM"]})
-    return rows
+    return [{"name": name, "metrics": metrics} for name, metrics in self.model_metrics.items()]
 
   def _metrics_for(self, model_name: str) -> dict | None:
     for item in self.get_available_models():
