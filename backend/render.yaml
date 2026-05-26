@@ -18,7 +18,7 @@ services:
       - key: FIREBASE_CREDENTIALS_PATH
         value: secret/firebase-service-account.json
       - key: JWT_SECRET_KEY
-        value: cyber-secret-jwt-key-windcast-ai-2026-dynamic-strobe
+        sync: false
       - key: JWT_ALGORITHM
         value: HS256
       - key: ACCESS_TOKEN_EXPIRE_MINUTES

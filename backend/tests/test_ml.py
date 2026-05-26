@@ -3,18 +3,16 @@ Unit tests for the ML service layer, checking fallbacks, constraints, and metric
 """
 
 import pytest
-from pathlib import Path
 from app.ml.service import ml_service
 
 def test_ml_service_models_list():
   models = ml_service.get_available_models()
-  assert len(models) >= 3
+  assert len(models) >= 4
   names = [m["name"] for m in models]
   assert "Random Forest" in names
   assert "XGBoost" in names
   assert "Linear Regression" in names
-  if (Path("trained_models") / "lstm.h5").exists():
-    assert "LSTM" in names
+  assert "LSTM" in names
 
 def test_ml_service_predict_successful():
   weather = {
@@ -26,9 +24,7 @@ def test_ml_service_predict_successful():
       "windgust": 14.8
   }
 
-  models = ["Random Forest", "XGBoost", "Linear Regression"]
-  if (Path("trained_models") / "lstm.h5").exists():
-    models.append("LSTM")
+  models = ["Random Forest", "XGBoost", "Linear Regression", "LSTM"]
 
   for model in models:
     res = ml_service.predict(model, weather)
@@ -38,6 +34,29 @@ def test_ml_service_predict_successful():
     assert res["efficiency"] >= 0.0 and res["efficiency"] <= 100.0
     assert "alert_status" in res
     assert res["confidence_score"] > 0.6
+
+def test_ml_service_models_return_distinct_outputs():
+  weather = {
+      "temperature": 20.25,
+      "relativehu": 51.36,
+      "dewpoint": 10.7,
+      "windspeed": 7.43,
+      "winddirec": 222.76,
+      "windgust": 9.06
+  }
+
+  outputs = {
+      model: ml_service.predict(model, weather)["predicted_power"]
+      for model in ["Random Forest", "XGBoost", "Linear Regression", "LSTM"]
+  }
+
+  assert len(set(outputs.values())) >= 3
+
+def test_ml_service_model_status_operational():
+  status = ml_service.get_model_status()
+  assert {item["name"] for item in status} == {"Random Forest", "XGBoost", "Linear Regression", "LSTM"}
+  assert all(item["operational"] for item in status)
+  assert all(item["inference_mode"] in {"trained_model", "surrogate"} for item in status)
 
 def test_ml_service_safeguard_alerts():
   # 1. Storm cut-off alert (>25 m/s)

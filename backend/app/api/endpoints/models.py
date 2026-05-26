@@ -24,6 +24,15 @@ def get_active_model():
   return {"active_model": "XGBoost"}
 
 
+@router.get("/status")
+def get_models_status():
+  """
+  Returns whether each frontend model option is served by a bundled trained file
+  or a lightweight production surrogate.
+  """
+  return {"models": ml_service.get_model_status()}
+
+
 @router.get("/regions")
 def get_model_regions():
   """

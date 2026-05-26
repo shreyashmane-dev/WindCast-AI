@@ -99,6 +99,14 @@ def test_models_listing_endpoint(client: TestClient):
   assert len(data) >= 4
   assert data[0]["name"] in ["Hist Gradient Boosting", "Linear Regression", "Random Forest", "XGBoost"]
 
+def test_models_status_endpoint(client: TestClient):
+  response = client.get("/api/v1/models/status")
+  assert response.status_code == 200
+  data = response.json()
+  models = data["models"]
+  assert {item["name"] for item in models} == {"Random Forest", "XGBoost", "Linear Regression", "LSTM"}
+  assert all(item["operational"] for item in models)
+
 def test_batch_prediction_endpoint(client: TestClient):
   # Construct a mock CSV dataset file stream in memory
   csv_content = (

@@ -270,6 +270,23 @@ export function useWeatherSimulation(initialModel = "XGBoost") {
   const changeModel = (model: string) => {
     setActiveModel(model);
     void updateForecasts(weather, model);
+
+    const fallbackPower = predictPowerKwFallback(model, weather);
+    const timestamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    const setInstantPoint = (power: number) => {
+      const instantTick: SimulationTick = {
+        time: timestamp,
+        ...weather,
+        power: parseFloat(power.toFixed(1)),
+      };
+      setHistory((prev) => {
+        if (prev.length === 0) return [instantTick];
+        return [...prev.slice(0, -1), instantTick];
+      });
+    };
+
+    setInstantPoint(fallbackPower);
+    void predictPowerKw(model, weather).then(setInstantPoint);
   };
 
   return {

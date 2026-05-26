@@ -8,6 +8,7 @@ class Settings(BaseSettings):
   PROJECT_NAME: str = "WindCast AI API"
   API_V1_STR: str = "/api/v1"
   ENVIRONMENT: str = "development"
+  PYTHON_VERSION: str = "3.11.11"
 
   # Allowed CORS origins
   ALLOWED_ORIGINS: str = "*"
