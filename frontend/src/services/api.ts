@@ -4,7 +4,7 @@
  * network timeouts, and response pre-processing.
  */
 
-const DEFAULT_API_URL = "http://localhost:8000/api/v1";
+const DEFAULT_API_URL = "http://localhost:8010/api/v1";
 
 class ApiClient {
   private baseUrl: string;
