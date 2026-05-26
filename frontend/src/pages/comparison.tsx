@@ -1,16 +1,32 @@
 import React from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import DashboardLayout from "../layouts/DashboardLayout";
 import { ML_METRICS } from "../utils/predictionModel";
 import PerformanceChart from "../charts/PerformanceChart";
 import CorrelationHeatmap from "../charts/CorrelationHeatmap";
+import { useAuth } from "../services/auth";
+import ProtectedLoader from "../components/auth/ProtectedLoader";
 import { GitCompare, Award, Table, BarChart3, HelpCircle, Activity } from "lucide-react";
 
 export default function ModelComparison() {
+  const router = useRouter();
+  const { isAuthenticated, isLoading } = useAuth();
+
+  React.useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.push("/login");
+    }
+  }, [isLoading, isAuthenticated, router]);
+
   // Sort models by RMSE ascending to calculate performance rankings dynamically
   const rankedModels = Object.entries(ML_METRICS)
     .map(([name, metrics]) => ({ name, ...metrics }))
     .sort((a, b) => a.RMSE - b.RMSE);
+
+  if (isLoading || !isAuthenticated) {
+    return <ProtectedLoader />;
+  }
 
   return (
     <DashboardLayout>

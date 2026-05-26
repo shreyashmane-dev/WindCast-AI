@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import DashboardLayout from "../layouts/DashboardLayout";
 import { useSimulation } from "../hooks/useWeatherSimulation";
 import { calculateEfficiency, getAlertStatus } from "../utils/predictionModel";
 import WindTurbine from "../components/WindTurbine";
 import { api } from "../services/api";
+import { useAuth } from "../services/auth";
+import ProtectedLoader from "../components/auth/ProtectedLoader";
 import {
   Cpu,
   Sliders,
@@ -96,6 +99,15 @@ const REGIONS: Record<string, WindRegion> = {
 };
 
 export default function PredictionsConsole() {
+  const router = useRouter();
+  const { isAuthenticated, isLoading } = useAuth();
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.push("/login");
+    }
+  }, [isLoading, isAuthenticated, router]);
+
   const {
     weather,
     activeModel,
@@ -112,6 +124,10 @@ export default function PredictionsConsole() {
 
   // Tab State: "manual" | "batch"
   const [activeTab, setActiveTab] = useState<"manual" | "batch">("manual");
+
+  if (isLoading || !isAuthenticated) {
+    return <ProtectedLoader />;
+  }
 
   // Manual Autocomplete Region Finder States
   const [searchQuery, setSearchQuery] = useState("");

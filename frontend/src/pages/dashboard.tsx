@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import DashboardLayout from "../layouts/DashboardLayout";
 import { useSimulation } from "../hooks/useWeatherSimulation";
 import { calculateEfficiency, getAlertStatus, ML_METRICS } from "../utils/predictionModel";
 import RealTimeChart from "../charts/RealTimeChart";
 import ForecastChart from "../charts/ForecastChart";
 import WindTurbine from "../components/WindTurbine";
+import { useAuth } from "../services/auth";
+import ProtectedLoader from "../components/auth/ProtectedLoader";
 import {
   Zap,
   Wind,
@@ -22,6 +25,15 @@ import {
 } from "lucide-react";
 
 export default function DashboardOverview() {
+  const router = useRouter();
+  const { isAuthenticated, isLoading } = useAuth();
+
+  React.useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.push("/login");
+    }
+  }, [isLoading, isAuthenticated, router]);
+
   const {
     weather,
     activeModel,
@@ -30,6 +42,10 @@ export default function DashboardOverview() {
     forecasts,
     setIsSimulating,
   } = useSimulation();
+
+  if (isLoading || !isAuthenticated) {
+    return <ProtectedLoader />;
+  }
 
   const [activeHorizon, setActiveHorizon] = useState<"1 Hour" | "6 Hours" | "24 Hours">("6 Hours");
 

@@ -25,10 +25,10 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
 
   const menuItems = [
     { name: "Overview", icon: LayoutDashboard, path: "/dashboard" },
-    { name: "AI Console", icon: Cpu, path: "/predictions" },
-    { name: "Model Tuning", icon: GitCompare, path: "/comparison" },
-    { name: "System Info", icon: Info, path: "/about" },
-    { name: "Landing Portal", icon: Home, path: "/" },
+    { name: "Predict Power", icon: Cpu, path: "/predictions" },
+    { name: "Compare Models", icon: GitCompare, path: "/comparison" },
+    { name: "About Us", icon: Info, path: "/about" },
+    { name: "Home", icon: Home, path: "/" },
   ];
 
   return (
@@ -115,30 +115,30 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
             className="p-3.5 bg-slate-950/60 border border-glass-border rounded-lg"
           >
             <div className="flex items-center justify-between gap-2 mb-2">
-              <span className="text-[10px] uppercase tracking-wider text-slate-500">AI Core Core Engine</span>
+              <span className="text-[10px] uppercase tracking-wider text-slate-500 font-mono">AI Status</span>
               <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-energy opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-energy"></span>
               </span>
             </div>
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
-              <Activity size={12} className="text-cyan-400 animate-pulse" />
-              <span>Telemetry: ONLINE</span>
+            <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-mono">
+              <Activity size={12} className="text-electric-cyan animate-pulse" />
+              <span>Sensors: ACTIVE</span>
             </div>
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-400 mt-1">
-              <Zap size={12} className="text-amber-400 animate-pulse" />
-              <span>Efficiency Peak</span>
+            <div className="flex items-center gap-1.5 text-[11px] text-slate-400 mt-1 font-mono">
+              <Zap size={12} className="text-electric-cyan animate-pulse" />
+              <span>System: OK</span>
             </div>
           </motion.div>
         ) : (
           <div className="flex justify-center group relative cursor-help">
             <span className="flex h-2 w-2 relative my-1">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-energy opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-energy"></span>
             </span>
             <div className="absolute left-16 bottom-2 ml-2 p-3 bg-slate-900 border border-glass-border rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 shadow-xl z-55 text-[10px] w-40">
-              <div className="font-semibold text-slate-200">AI Model Live</div>
-              <div className="text-slate-400 mt-1">All telemetry feeds active and synced.</div>
+              <div className="font-semibold text-slate-200">AI Status: OK</div>
+              <div className="text-slate-400 mt-1">All systems are running.</div>
             </div>
           </div>
         )}

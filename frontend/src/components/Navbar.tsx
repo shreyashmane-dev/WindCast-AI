@@ -15,8 +15,8 @@ export default function Navbar({ activeModel = "Random Forest", isSimulating = t
 
   const links = [
     { name: "Overview", path: "/dashboard" },
-    { name: "AI Console", path: "/predictions" },
-    { name: "Model Tuning", path: "/comparison" },
+    { name: "Predict Power", path: "/predictions" },
+    { name: "Compare Models", path: "/comparison" },
   ];
 
   return (
@@ -29,7 +29,7 @@ export default function Navbar({ activeModel = "Random Forest", isSimulating = t
         </div>
         <div className="flex flex-col">
           <span className="text-md font-bold tracking-wider text-slate-100 bg-gradient-to-r from-slate-100 to-slate-400 bg-clip-text">
-            WINDCAST <span className="text-cyan-400 text-glow-cyan">AI</span>
+            WINDCAST <span className="text-cyan-400 text-glow-cyan font-bold font-mono">AI</span>
           </span>
           <span className="text-[9px] font-mono tracking-widest text-slate-500 uppercase -mt-0.5">Energy Forecaster</span>
         </div>
@@ -40,16 +40,16 @@ export default function Navbar({ activeModel = "Random Forest", isSimulating = t
         {/* Model Pill */}
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/60 border border-glass-border text-xs text-slate-300">
           <Cpu size={13} className="text-cyan-400" />
-          <span>Active Engine:</span>
+          <span>AI Model:</span>
           <span className="font-semibold text-cyan-400">{activeModel}</span>
         </div>
 
         {/* Sync Pill */}
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/60 border border-glass-border text-xs text-slate-300">
           <span className={`h-1.5 w-1.5 rounded-full ${isSimulating ? "bg-emerald-400 animate-pulse" : "bg-amber-400"}`}></span>
-          <span>Simulation:</span>
+          <span>Simulator:</span>
           <span className={`font-semibold ${isSimulating ? "text-emerald-400" : "text-amber-400"}`}>
-            {isSimulating ? "LIVE FEED" : "PAUSED"}
+            {isSimulating ? "ACTIVE" : "PAUSED"}
           </span>
         </div>
       </div>
@@ -114,13 +114,13 @@ export default function Navbar({ activeModel = "Random Forest", isSimulating = t
             {/* Status indicators for mobile */}
             <div className="flex flex-col gap-2 pb-4 border-b border-glass-border/30">
               <div className="flex justify-between items-center text-xs text-slate-400">
-                <span>Core Engine:</span>
+                <span>AI Model:</span>
                 <span className="text-cyan-400 font-semibold">{activeModel}</span>
               </div>
               <div className="flex justify-between items-center text-xs text-slate-400">
-                <span>Simulation status:</span>
+                <span>Simulator:</span>
                 <span className={isSimulating ? "text-emerald-400 font-semibold animate-pulse" : "text-amber-400 font-semibold"}>
-                  {isSimulating ? "STREAMING" : "PAUSED"}
+                  {isSimulating ? "ACTIVE" : "PAUSED"}
                 </span>
               </div>
             </div>
