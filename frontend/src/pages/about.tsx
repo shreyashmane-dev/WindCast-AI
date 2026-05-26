@@ -21,13 +21,13 @@ export default function AboutSystem() {
   const models = [
     {
       name: "LSTM Recurrent Network",
-      r2: "42.6%",
-      mae: "0.15",
+      r2: "Pending",
+      mae: "Pending",
       type: "Sequential Time-Series Model",
       icon: TrendingUp,
       color: "text-purple-400 border-purple-500/30 bg-purple-500/5",
       glow: "rgba(167, 139, 250, 0.15)",
-      description: "A TensorFlow/Keras Long Short-Term Memory model trained on ordered weather sequences. It uses lookback windows to learn how actual time, wind speed, direction, temperature, humidity, dewpoint, and gust changes affect short-term power output."
+      description: "Supported TensorFlow/Keras sequence model for ordered weather windows. It will be included in comparison only after training creates backend/trained_models/lstm.h5 in a Python 3.11 TensorFlow environment."
     },
     {
       name: "Random Forest Regressor",

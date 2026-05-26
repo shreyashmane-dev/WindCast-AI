@@ -33,12 +33,6 @@ export const ML_METRICS: Record<string, ModelMetrics> = {
     R2: 0.466,
     MAPE: 401.36
   },
-  "LSTM": {
-    MAE: 0.15,
-    RMSE: 0.21,
-    R2: 0.426,
-    MAPE: 421.42
-  },
   "Linear Regression": {
     MAE: 0.15,
     RMSE: 0.21,
