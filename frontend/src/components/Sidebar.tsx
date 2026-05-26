@@ -36,7 +36,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
       initial={false}
       animate={{ width: isOpen ? 260 : 78 }}
       transition={{ duration: 0.4, ease: [0.25, 0.8, 0.25, 1] }}
-      className="fixed top-0 left-0 h-screen z-30 glass-panel border-r border-glass-border flex flex-col justify-between pt-20 pb-6 text-slate-300 overflow-hidden"
+      className="fixed top-0 left-0 h-screen z-30 glass-panel border-r border-glass-border flex flex-col justify-between pt-20 pb-6 text-slate-800 overflow-hidden"
     >
       {/* Sidebar Top / Menu Section */}
       <div className="flex flex-col gap-6 w-full">
@@ -59,15 +59,15 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                 <div
                   className={`flex items-center gap-4 px-3 py-3 rounded-lg cursor-pointer transition-all duration-300 relative group overflow-hidden ${
                     isActive
-                      ? "text-cyan-300 font-medium"
-                      : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+                      ? "text-red-600 font-bold"
+                      : "text-slate-600 hover:text-red-600 hover:bg-slate-100"
                   }`}
                 >
                   {/* Sliding glowing background for active element */}
                   {isActive && (
                     <motion.div
                       layoutId="activeSidebarGlow"
-                      className="absolute inset-0 bg-gradient-to-r from-cyan-950/40 via-cyan-900/10 to-transparent border-l-2 border-cyan-400 z-0"
+                      className="absolute inset-0 bg-gradient-to-r from-red-500/10 via-red-500/5 to-transparent border-l-4 border-red-600 z-0"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}

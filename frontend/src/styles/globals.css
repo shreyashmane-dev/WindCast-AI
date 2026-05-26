@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-electric-cyan: #00E5FF;
-  --color-emerald-energy: #00FF9D;
-  --color-neon-orange: #FF8A00;
-  --color-cyber-purple: #8B5CF6;
-  --color-dark-deep: #0B1020;
-  --color-dark-panel: rgba(15, 23, 42, 0.65);
-  --color-glass-border: rgba(0, 229, 255, 0.15);
-  --color-glass-border-hover: rgba(0, 229, 255, 0.4);
+  --color-electric-cyan: #DC2626; /* Remapped to Crimson Red */
+  --color-emerald-energy: #16A34A; /* Rich Green */
+  --color-neon-orange: #EA580C; /* Warm Orange */
+  --color-cyber-purple: #9333EA; /* Bold Purple */
+  --color-dark-deep: #F8FAFC; /* Crisp Light Slate Background */
+  --color-dark-panel: #FFFFFF; /* Pure White Panels */
+  --color-glass-border: #E2E8F0; /* Clean light slate border */
+  --color-glass-border-hover: #DC2626; /* Crimson Red active highlight */
 
   --animate-spin-slow: spin 20s linear infinite;
   --animate-pulse-slow: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -17,61 +17,96 @@
 
 @layer base {
   body {
-    background-color: #0B1020;
-    color: #F8FAFC;
+    background-color: #F8FAFC;
+    color: #0F172A; /* High contrast dark text */
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 15px; /* Significantly increased font size */
+    line-height: 1.6;
     overflow-x: hidden;
   }
   
-  h1, h2, h3, h4, h5, h6 {
+  h1 {
     font-family: 'Space Grotesk', 'Sora', sans-serif;
-    color: #F8FAFC;
+    color: #0F172A;
+    font-size: 32px !important; /* Larger headers */
+    font-weight: 800;
+  }
+  
+  h2 {
+    font-family: 'Space Grotesk', 'Sora', sans-serif;
+    color: #0F172A;
+    font-size: 26px !important;
+    font-weight: 700;
+  }
+  
+  h3 {
+    font-family: 'Space Grotesk', 'Sora', sans-serif;
+    color: #0F172A;
+    font-size: 20px !important;
+    font-weight: 700;
+  }
+
+  h4, h5, h6 {
+    font-family: 'Space Grotesk', 'Sora', sans-serif;
+    color: #0F172A;
+    font-size: 16px !important;
+    font-weight: 700;
+  }
+
+  p {
+    font-size: 15px !important; /* Larger text */
+    color: #475569;
+  }
+
+  span {
+    font-size: 13px; /* Larger sub-labels */
   }
 }
 
-/* Glassmorphism Components for Futuristic SaaS */
+/* Beautiful High-Contrast Red & White Premium Card Panel styles */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 229, 255, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #FFFFFF;
+  backdrop-filter: none;
+  border: 2px solid #E2E8F0; /* Thicker, highly visible borders */
+  box-shadow: 0 4px 12px 0 rgba(15, 23, 42, 0.04);
+  transition: all 0.25s ease-in-out;
 }
 
 .glass-panel-hover:hover {
-  border-color: rgba(0, 229, 255, 0.4);
-  box-shadow: 0 12px 40px 0 rgba(0, 229, 255, 0.12), 0 0 15px 0 rgba(0, 229, 255, 0.05) inset;
-  transform: translateY(-4px) scale(1.005);
+  border-color: #DC2626; /* Glowing Crimson Red */
+  box-shadow: 0 10px 25px 0 rgba(220, 38, 38, 0.08);
+  transform: translateY(-3px);
 }
 
-/* Glow effects for Neo Energy Theme */
+/* Text glow utilities configured for high readability */
 .text-glow-cyan {
-  text-shadow: 0 0 10px rgba(0, 229, 255, 0.6), 0 0 20px rgba(0, 229, 255, 0.2);
+  color: #DC2626 !important;
+  font-weight: 800;
 }
 
 .text-glow-green {
-  text-shadow: 0 0 10px rgba(0, 255, 157, 0.6), 0 0 20px rgba(0, 255, 157, 0.2);
+  color: #16A34A !important;
+  font-weight: 800;
 }
 
 .border-glow-cyan {
-  box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
-  border-color: rgba(0, 229, 255, 0.5);
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.15);
+  border-color: #DC2626;
 }
 
 .border-glow-green {
-  box-shadow: 0 0 15px rgba(0, 255, 157, 0.25);
-  border-color: rgba(0, 255, 157, 0.5);
+  box-shadow: 0 0 10px rgba(22, 163, 74, 0.15);
+  border-color: #16A34A;
 }
 
 .border-glow-orange {
-  box-shadow: 0 0 15px rgba(255, 138, 0, 0.25);
-  border-color: rgba(255, 138, 0, 0.5);
+  box-shadow: 0 0 10px rgba(234, 88, 12, 0.15);
+  border-color: #EA580C;
 }
 
 .border-glow-purple {
-  box-shadow: 0 0 15px rgba(139, 92, 246, 0.25);
-  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 10px rgba(147, 51, 234, 0.15);
+  border-color: #9333EA;
 }
 
 /* Turbine Spin Animation */
@@ -89,44 +124,43 @@
   transform-origin: center center;
 }
 
-/* Custom Scrollbar for Sci-Fi Aesthetics */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B1020;
+  background: #F1F5F9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  background: #CBD5E1;
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00E5FF;
-  box-shadow: 0 0 8px #00E5FF;
+  background: #DC2626;
 }
 
-/* Ambient Background Lights */
+/* Ambient Background Lights - soft red/crimson accents */
 .bg-ambient {
   position: absolute;
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.15;
+  filter: blur(140px);
+  opacity: 0.08; /* Softened so it doesn't hurt readability */
   pointer-events: none;
   z-index: 0;
 }
 
-/* Floating grid pattern */
+/* High contrast clean grid pattern */
 .bg-cyber-grid {
-  background-size: 40px 40px;
+  background-size: 35px 35px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(to right, rgba(220, 38, 38, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(220, 38, 38, 0.015) 1px, transparent 1px);
 }
 
 /* Energy Grid Dot Flow */
@@ -154,7 +188,7 @@
   left: 0;
   height: 100%;
   width: 30%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
   animation: slide-glow 2s infinite linear;
 }
 
@@ -166,14 +200,7 @@
 /* Animated floating gradients */
 @keyframes float-grad-1 {
   0% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(40px, -60px) scale(1.1); }
-  66% { transform: translate(-30px, 40px) scale(0.95); }
-  100% { transform: translate(0px, 0px) scale(1); }
-}
-
-@keyframes float-grad-2 {
-  0% { transform: translate(0px, 0px) scale(1); }
-  50% { transform: translate(-50px, 50px) scale(1.05); }
+  50% { transform: translate(30px, -40px) scale(1.05); }
   100% { transform: translate(0px, 0px) scale(1); }
 }
 
@@ -181,21 +208,17 @@
   animation: float-grad-1 25s infinite ease-in-out;
 }
 
-.animate-float-2 {
-  animation: float-grad-2 30s infinite ease-in-out;
-}
-
 /* Subtle Animated Wind Flow background lines */
 .wind-flow-lines {
   background-image: repeating-linear-gradient(
     0deg,
     transparent,
-    transparent 40px,
-    rgba(0, 229, 255, 0.03) 41px,
-    rgba(0, 229, 255, 0.03) 42px,
-    transparent 43px
+    transparent 45px,
+    rgba(220, 38, 38, 0.02) 46px,
+    rgba(220, 38, 38, 0.02) 47px,
+    transparent 48px
   );
-  animation: wind-flow-motion 20s infinite linear;
+  animation: wind-flow-motion 25s infinite linear;
 }
 
 @keyframes wind-flow-motion {
@@ -203,7 +226,7 @@
   to { background-position: 500px 500px; }
 }
 
-/* Scanning Security Laser Animation for Protected Route Loaders */
+/* Scanning Security Laser Animation */
 @keyframes scanning-laser {
   0% {
     top: 0%;
@@ -211,7 +234,7 @@
   }
   50% {
     top: 100%;
-    opacity: 0.8;
+    opacity: 0.4;
   }
   100% {
     top: 0%;
@@ -223,9 +246,9 @@
   position: absolute;
   left: 0;
   width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #00E5FF, #00FF9D, #00E5FF, transparent);
-  box-shadow: 0 0 10px #00E5FF, 0 0 20px #00FF9D;
+  height: 2.5px;
+  background: linear-gradient(90deg, transparent, #DC2626, #16A34A, #DC2626, transparent);
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
   animation: scanning-laser 4s ease-in-out infinite;
   z-index: 10;
   pointer-events: none;

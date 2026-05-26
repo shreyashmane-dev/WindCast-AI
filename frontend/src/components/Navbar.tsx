@@ -62,14 +62,14 @@ export default function Navbar({ activeModel = "Random Forest", isSimulating = t
             <Link key={link.path} href={link.path}>
               <span
                 className={`text-sm cursor-pointer relative py-2 transition-colors duration-200 ${
-                  isActive ? "text-cyan-400 font-medium" : "text-slate-400 hover:text-slate-200"
+                  isActive ? "text-red-600 font-bold" : "text-slate-600 hover:text-red-600"
                 }`}
               >
                 {link.name}
                 {isActive && (
                   <motion.span
                     layoutId="activeNavIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"
+                    className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-red-500 to-red-600 rounded-full"
                     transition={{ type: "spring", stiffness: 350, damping: 30 }}
                   />
                 )}
@@ -82,20 +82,20 @@ export default function Navbar({ activeModel = "Random Forest", isSimulating = t
       {/* Profile/System Actions */}
       <div className="flex items-center gap-3">
         {/* Sync Status Button */}
-        <div className="hidden sm:flex p-2 rounded-lg bg-slate-900 border border-glass-border hover:border-cyan-500/50 text-slate-400 hover:text-cyan-400 transition-all cursor-pointer">
+        <div className="hidden sm:flex p-2 rounded-lg bg-slate-100 border border-glass-border hover:border-red-500/50 text-slate-600 hover:text-red-600 transition-all cursor-pointer">
           <Globe size={16} className="animate-pulse" />
         </div>
 
         {/* User Pill */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-950/20 border border-cyan-800/40 text-xs text-slate-300">
-          <User size={14} className="text-cyan-400" />
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-50 border border-red-200/50 text-xs text-slate-800 font-bold">
+          <User size={14} className="text-red-600" />
           <span className="hidden sm:inline font-mono">OP-ENGINEER</span>
         </div>
 
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg bg-slate-900 border border-glass-border text-slate-400 hover:text-cyan-400 hover:border-cyan-500/45 transition-all"
+          className="md:hidden p-2 rounded-lg bg-slate-100 border border-glass-border text-slate-600 hover:text-red-600 hover:border-red-500/45 transition-all"
         >
           {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -133,8 +133,8 @@ export default function Navbar({ activeModel = "Random Forest", isSimulating = t
                   <div
                     className={`py-2 px-3 rounded-lg text-sm transition-all ${
                       isActive
-                        ? "bg-cyan-950/30 text-cyan-400 border border-cyan-500/20"
-                        : "text-slate-400 hover:text-slate-200"
+                        ? "bg-red-50 text-red-600 border border-red-200"
+                        : "text-slate-600 hover:text-red-600"
                     }`}
                   >
                     {link.name}
@@ -149,9 +149,9 @@ export default function Navbar({ activeModel = "Random Forest", isSimulating = t
                 router.push("/");
                 setMobileMenuOpen(false);
               }}
-              className="mt-2 w-full py-2.5 text-center text-xs bg-slate-900 border border-glass-border hover:border-cyan-500 rounded-lg text-slate-300 hover:text-cyan-400 transition-all font-semibold"
+              className="mt-2 w-full py-2.5 text-center text-xs bg-slate-100 border border-glass-border hover:border-red-500 rounded-lg text-slate-700 hover:text-red-600 transition-all font-semibold"
             >
-              Enter Landing Portal
+              Enter Home
             </button>
           </motion.div>
         )}
