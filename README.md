@@ -66,7 +66,7 @@ The platform compares these models:
 - Linear Regression
 - Random Forest
 - XGBoost
-- LSTM
+- LSTM (supported; requires Python 3.11 + TensorFlow to train `lstm.h5`)
 
 Current trained production model:
 
@@ -74,7 +74,7 @@ Current trained production model:
 XGBoost
 ```
 
-Note: LSTM is trained as a real TensorFlow/Keras sequence model. Use a Python 3.11 environment and install `backend/requirements.txt` before running the backend training pipeline.
+Note: LSTM is supported as a real TensorFlow/Keras sequence model, but it is only included in reports after `backend/trained_models/lstm.h5` exists. The current machine is running Python 3.14, where TensorFlow is unavailable.
 
 ## Latest Training Results
 
@@ -85,15 +85,16 @@ Total records: 175,200
 Best model: XGBoost
 ```
 
-Model comparison:
+Model comparison from the current Python 3.14 training run:
 
 ```text
 Model              MAE       RMSE      R2        MAPE
 XGBoost            0.140996  0.195914  0.465809  401.355768
 Random Forest      0.142736  0.197397  0.457692  404.347106
 Linear Regression  0.151354  0.205378  0.412952  400.624041
-LSTM               0.152276  0.211587  0.425809  421.423556
 ```
+
+LSTM is intentionally not listed in the current metrics file because it was not trained in this Python 3.14 environment. Use Python 3.11 with TensorFlow to train it and add it to comparison.
 
 Best model selection is based on lowest RMSE.
 
@@ -265,13 +266,18 @@ backend/trained_models/random_forest.joblib
 backend/trained_models/xgboost.joblib
 backend/trained_models/best_model.joblib
 backend/trained_models/best_model.pkl
-backend/trained_models/lstm.h5
-backend/trained_models/lstm_model.h5
-backend/trained_models/lstm_scaler.joblib
 backend/trained_models/model_metrics.csv
 backend/trained_models/metrics.csv
 backend/trained_models/metadata.json
 backend/app/static/model_metrics.csv
+```
+
+When TensorFlow LSTM training is run successfully, these additional files are created:
+
+```text
+backend/trained_models/lstm.h5
+backend/trained_models/lstm_model.h5
+backend/trained_models/lstm_scaler.joblib
 ```
 
 ## Verification

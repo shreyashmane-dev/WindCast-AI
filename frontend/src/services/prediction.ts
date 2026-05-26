@@ -54,7 +54,7 @@ export const predictionService = {
         predicted_power: power,
         efficiency: eff,
         alert_status: alert.message,
-        confidence_score: modelName === "LSTM" ? 0.86 : modelName === "Random Forest" ? 0.61 : 0.88,
+        confidence_score: modelName === "Random Forest" ? 0.61 : 0.88,
         model_used: `${modelName} (Local Client Fallback)`,
         region: weather.location ?? "Mumbai, India",
       };

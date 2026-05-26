@@ -75,7 +75,7 @@ export default function AboutSystem() {
     {
       num: "03",
       title: "Model Training",
-      desc: "Linear Regression, Random Forest, XGBoost, and LSTM are trained and evaluated on chronological train/test splits for short-term forecasting."
+      desc: "Linear Regression, Random Forest, and XGBoost are trained now; LSTM is added after TensorFlow training creates lstm.h5."
     },
     {
       num: "04",
@@ -123,7 +123,7 @@ export default function AboutSystem() {
               WindCast AI is a short-term wind power forecasting project built with machine learning. It predicts wind turbine power output from weather conditions such as wind speed, wind direction, temperature, humidity, dewpoint, wind gust, and actual timestamp features.
             </p>
             <p>
-              The system trains Linear Regression, Random Forest, XGBoost, and LSTM models, compares them with MAE, RMSE, R2, and MAPE, and displays live prediction graphs in the dashboard.
+              The system trains Linear Regression, Random Forest, and XGBoost in the current environment, supports LSTM when TensorFlow is available, compares models with MAE, RMSE, R2, and MAPE, and displays live prediction graphs in the dashboard.
             </p>
           </div>
         </div>

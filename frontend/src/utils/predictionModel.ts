@@ -72,13 +72,6 @@ export function predictPower(
       basePower += (25 - temperature) * 3.5;
       break;
 
-    case "LSTM":
-      const timeFactor = Math.sin((hour * Math.PI) / 12) * 50;
-      const speedRatioLSTM = (Math.min(windspeed + 0.2, ratedSpeed) - cutIn) / (ratedSpeed - cutIn);
-      basePower = ratedPower * Math.pow(speedRatioLSTM, 3.1) + timeFactor;
-      basePower += (windgust - windspeed) * 20;
-      break;
-
     case "XGBoost":
       // Piecewise gradient boosting approximation
       const speedRatioXG = (Math.min(windspeed, ratedSpeed) - cutIn) / (ratedSpeed - cutIn);

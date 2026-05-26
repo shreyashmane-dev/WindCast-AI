@@ -1,65 +1,77 @@
 @import "tailwindcss";
 
 @theme {
-  --color-electric-blue: #0ea5e9;
-  --color-neon-cyan: #06b6d4;
-  --color-emerald-green: #10b981;
-  --color-cyber-purple: #8b5cf6;
-  --color-dark-deep: #030712;
-  --color-dark-panel: #0b0f19;
-  --color-glass-border: #1e293b;
-  --color-glass-border-hover: #06b6d4;
+  --color-electric-cyan: #00E5FF;
+  --color-emerald-energy: #00FF9D;
+  --color-neon-orange: #FF8A00;
+  --color-cyber-purple: #8B5CF6;
+  --color-dark-deep: #0B1020;
+  --color-dark-panel: rgba(15, 23, 42, 0.65);
+  --color-glass-border: rgba(0, 229, 255, 0.15);
+  --color-glass-border-hover: rgba(0, 229, 255, 0.4);
 
-  --animate-spin-slow: spin 15s linear infinite;
-  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-spin-slow: spin 20s linear infinite;
+  --animate-pulse-slow: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-glow-pulse: glow 3s ease-in-out infinite alternate;
 }
 
 @layer base {
   body {
-    background-color: #030712;
-    color: #f3f4f6;
+    background-color: #0B1020;
+    color: #F8FAFC;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
   }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', 'Sora', sans-serif;
+    color: #F8FAFC;
+  }
 }
 
-/* Custom Solid Premium Panel Utilities */
-
+/* Glassmorphism Components for Futuristic SaaS */
 .glass-panel {
-  background: #0b0f19; /* Solid deep navy panel */
-  border: 1px solid #1e293b; /* Solid slate border */
-  box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.45);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-panel-hover:hover {
-  border-color: #06b6d4; /* Solid neon cyan highlight */
-  box-shadow: 0 4px 20px 0 rgba(6, 182, 212, 0.08);
-  transform: translateY(-2px);
+  border-color: rgba(0, 229, 255, 0.4);
+  box-shadow: 0 12px 40px 0 rgba(0, 229, 255, 0.12), 0 0 15px 0 rgba(0, 229, 255, 0.05) inset;
+  transform: translateY(-4px) scale(1.005);
 }
 
+/* Glow effects for Neo Energy Theme */
 .text-glow-cyan {
-  text-shadow: 0 0 10px rgba(6, 182, 212, 0.6), 0 0 20px rgba(6, 182, 212, 0.2);
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.6), 0 0 20px rgba(0, 229, 255, 0.2);
 }
 
 .text-glow-green {
-  text-shadow: 0 0 10px rgba(16, 185, 129, 0.6), 0 0 20px rgba(16, 185, 129, 0.2);
+  text-shadow: 0 0 10px rgba(0, 255, 157, 0.6), 0 0 20px rgba(0, 255, 157, 0.2);
 }
 
 .border-glow-cyan {
-  box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
-  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
+  border-color: rgba(0, 229, 255, 0.5);
 }
 
 .border-glow-green {
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
-  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 15px rgba(0, 255, 157, 0.25);
+  border-color: rgba(0, 255, 157, 0.5);
 }
 
-.border-glow-rose {
-  box-shadow: 0 0 15px rgba(244, 63, 94, 0.25);
-  border-color: rgba(244, 63, 94, 0.5);
+.border-glow-orange {
+  box-shadow: 0 0 15px rgba(255, 138, 0, 0.25);
+  border-color: rgba(255, 138, 0, 0.5);
+}
+
+.border-glow-purple {
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.5);
 }
 
 /* Turbine Spin Animation */
@@ -84,7 +96,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #030712;
+  background: #0B1020;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -93,8 +105,8 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #06b6d4;
-  box-shadow: 0 0 8px #06b6d4;
+  background: #00E5FF;
+  box-shadow: 0 0 8px #00E5FF;
 }
 
 /* Ambient Background Lights */
@@ -151,6 +163,46 @@
   100% { transform: translateX(330%); }
 }
 
+/* Animated floating gradients */
+@keyframes float-grad-1 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(40px, -60px) scale(1.1); }
+  66% { transform: translate(-30px, 40px) scale(0.95); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes float-grad-2 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(-50px, 50px) scale(1.05); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.animate-float-1 {
+  animation: float-grad-1 25s infinite ease-in-out;
+}
+
+.animate-float-2 {
+  animation: float-grad-2 30s infinite ease-in-out;
+}
+
+/* Subtle Animated Wind Flow background lines */
+.wind-flow-lines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 40px,
+    rgba(0, 229, 255, 0.03) 41px,
+    rgba(0, 229, 255, 0.03) 42px,
+    transparent 43px
+  );
+  animation: wind-flow-motion 20s infinite linear;
+}
+
+@keyframes wind-flow-motion {
+  from { background-position: 0 0; }
+  to { background-position: 500px 500px; }
+}
+
 /* Scanning Security Laser Animation for Protected Route Loaders */
 @keyframes scanning-laser {
   0% {
@@ -172,8 +224,8 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #06b6d4, #10b981, #06b6d4, transparent);
-  box-shadow: 0 0 10px #06b6d4, 0 0 20px #10b981;
+  background: linear-gradient(90deg, transparent, #00E5FF, #00FF9D, #00E5FF, transparent);
+  box-shadow: 0 0 10px #00E5FF, 0 0 20px #00FF9D;
   animation: scanning-laser 4s ease-in-out infinite;
   z-index: 10;
   pointer-events: none;

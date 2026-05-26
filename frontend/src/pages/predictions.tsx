@@ -140,11 +140,6 @@ export default function PredictionsConsole() {
       type: "Gradient Boosting",
       details: "Piecewise gridsearch trees with 0.08 learning rate, robust L2 regularization, and high gust sensitivities."
     },
-    "LSTM": {
-      desc: "Sequence model mode for short-term temporal wind forecasting patterns.",
-      type: "Recurrent Neural Net",
-      details: "Uses the trained TensorFlow/Keras LSTM sequence model and saved temporal scaler for short-term time-series forecasting."
-    },
     "Linear Regression": {
       desc: "High-speed weighted regression baseline mapping primary kinetic speed indices.",
       type: "Linear Estimator",
